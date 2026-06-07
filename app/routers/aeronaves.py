@@ -3,6 +3,7 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
+from app.broker.publisher import publicar_evento
 from app.crud import crud
 from app.database.db import get_db
 from app.schemas.schemas import AeronaveCreate, AeronaveResponse
@@ -31,7 +32,14 @@ def adicionar_aeronave(companhia_id: int, dados: AeronaveCreate, db: Session = D
     companhia = crud.get_companhia(db, companhia_id)
     if not companhia:
         raise HTTPException(status_code=404, detail="Companhia não encontrada")
-    return crud.adicionar_aeronave(db, companhia_id, dados)
+    aeronave = crud.adicionar_aeronave(db, companhia_id, dados)
+    publicar_evento("AERONAVE_ADICIONADA", {
+        "id": aeronave.id,
+        "prefixo": aeronave.prefixo,
+        "modelo": aeronave.modelo,
+        "companhia_id": companhia_id,
+    })
+    return aeronave
 
 
 @router.delete("/{aeronave_id}", status_code=204)
@@ -39,3 +47,7 @@ def remover_aeronave(companhia_id: int, aeronave_id: int, db: Session = Depends(
     aeronave = crud.remover_aeronave(db, companhia_id, aeronave_id)
     if not aeronave:
         raise HTTPException(status_code=404, detail="Aeronave não encontrada")
+    publicar_evento("AERONAVE_REMOVIDA", {
+        "id": aeronave_id,
+        "companhia_id": companhia_id,
+    })

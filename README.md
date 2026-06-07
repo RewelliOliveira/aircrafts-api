@@ -24,6 +24,12 @@ docker-compose up --build
 
 ---
 
+Limpar os chace do python
+
+```bash
+Get-ChildItem -Recurse -Directory -Filter "__pycache__" | Remove-Item -Recurse -Force
+```
+
 ## 3. Acessando a documentação Swagger
 
 Com a API rodando, acesse no navegador:
@@ -32,8 +38,14 @@ Com a API rodando, acesse no navegador:
 http://localhost:8000/docs
 ```
 
+Enquanto testa deixe a pasta de notificacoes abertas
+
+```
+http://localhost:8000/eventos/stream
+```
+
 - Aqui você pode testar todos os endpoints (GET, POST, DELETE etc.)
-- O Swagger mostra exemplos de requisição e resposta para cada rota
+- O Swagger mostra exemplos de requisição e resposta para cada rota e tambem os evntos
 
 ---
 

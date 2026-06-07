@@ -3,6 +3,7 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
+from app.broker.publisher import publicar_evento
 from app.crud import crud
 from app.database.db import get_db
 from app.schemas.schemas import CompanhiaAereaCreate, CompanhiaAereaResponse
@@ -33,7 +34,13 @@ def buscar_companhia(companhia_id: int, db: Session = Depends(get_db)):
 
 @router.post("/", response_model=CompanhiaAereaResponse, status_code=201)
 def criar_companhia(dados: CompanhiaAereaCreate, db: Session = Depends(get_db)):
-    return crud.criar_companhia(db, dados)
+    companhia = crud.criar_companhia(db, dados)
+    publicar_evento("COMPANHIA_CRIADA", {
+        "id": companhia.id,
+        "nome": companhia.nome,
+        "codigo_iata": companhia.codigo_iata,
+    })
+    return companhia
 
 
 @router.delete("/{companhia_id}", status_code=204)
@@ -41,3 +48,4 @@ def remover_companhia(companhia_id: int, db: Session = Depends(get_db)):
     companhia = crud.remover_companhia(db, companhia_id)
     if not companhia:
         raise HTTPException(status_code=404, detail="Companhia não encontrada")
+    publicar_evento("COMPANHIA_REMOVIDA", {"id": companhia_id})
