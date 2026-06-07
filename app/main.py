@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database.db import Base, engine
-from app.routers import aeronaves, companhias
+from app.routers import aeronaves, companhias, eventos
 
 Base.metadata.create_all(bind=engine)
 
@@ -20,6 +20,7 @@ app.add_middleware(
 
 app.include_router(companhias.router)
 app.include_router(aeronaves.router)
+app.include_router(eventos.router)
 
 
 @app.get("/", tags=["Root"])
