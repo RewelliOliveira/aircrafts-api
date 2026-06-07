@@ -24,6 +24,12 @@ docker-compose up --build
 
 ---
 
+Limpar os chace do python
+
+```bash
+Get-ChildItem -Recurse -Directory -Filter "__pycache__" | Remove-Item -Recurse -Force
+```
+
 ## 3. Acessando a documentação Swagger
 
 Com a API rodando, acesse no navegador:
