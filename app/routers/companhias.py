@@ -1,15 +1,12 @@
 from typing import List
-
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-
 from app.broker.publisher import publicar_evento
 from app.crud import crud
 from app.database.db import get_db
 from app.schemas.schemas import CompanhiaAereaCreate, CompanhiaAereaResponse
 
 router = APIRouter(prefix="/companhias", tags=["Companhias"])
-
 
 @router.get("/", response_model=List[CompanhiaAereaResponse])
 def listar_companhias(db: Session = Depends(get_db)):

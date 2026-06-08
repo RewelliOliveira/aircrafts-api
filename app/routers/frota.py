@@ -9,5 +9,4 @@ router = APIRouter(prefix="/aeronaves", tags=["Frota Global"])
 
 @router.get("/", response_model=List[AeronaveResponse])
 def listar_todas_aeronaves(db: Session = Depends(get_db)):
-    """Retorna todas as aeronaves de todas as companhias."""
     return crud.get_todas_aeronaves(db)
