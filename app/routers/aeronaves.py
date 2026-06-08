@@ -1,15 +1,12 @@
 from typing import List
-
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-
 from app.broker.publisher import publicar_evento
 from app.crud import crud
 from app.database.db import get_db
 from app.schemas.schemas import AeronaveCreate, AeronaveResponse
 
 router = APIRouter(prefix="/companhias/{companhia_id}/aeronaves", tags=["Aeronaves"])
-
 
 @router.get("/", response_model=List[AeronaveResponse])
 def listar_frota(companhia_id: int, db: Session = Depends(get_db)):

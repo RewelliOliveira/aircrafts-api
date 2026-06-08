@@ -50,6 +50,10 @@ def adicionar_aeronave(db: Session, companhia_id: int, dados: AeronaveCreate):
     return aeronave
 
 
+def get_todas_aeronaves(db: Session):
+    return db.query(Aeronave).all()
+
+
 def remover_aeronave(db: Session, companhia_id: int, aeronave_id: int):
     aeronave = db.query(Aeronave).filter(
         Aeronave.id == aeronave_id,
