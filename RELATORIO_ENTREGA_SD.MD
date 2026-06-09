@@ -14,7 +14,7 @@
 - **API (Python/FastAPI):** [github.com/RewelliOliveira/aircrafts-api](https://github.com/RewelliOliveira/aircrafts-api)
 - **User UI (React/TS):** [github.com/RewelliOliveira/aircraft-user-interface](https://github.com/RewelliOliveira/aircraft-user-interface)
 - **Admin UI (Flutter):** [github.com/Anaildo/aircrafts-admin](https://github.com/Anaildo/aircrafts-admin/tree/main)
-- **Link Video do projeto:** https://drive.google.com/file/d/1Sk7q3__ZWoN1-ekU_3Nwhaba3ehBm8SG/view?usp=sharing
+- **Link Video do projeto:** https://drive.google.com/file/d/1Mb-zMg0bsmZnQCmT_Aj47xN8maOpMOhX/view?usp=sharing
 
 ---
 
